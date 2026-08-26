@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+sqlalchemy
+pymysql
+transformers
+torch
+fuzzywuzzy
+python-Levenshtein
+pydantic
+httpx
+python-dotenv
