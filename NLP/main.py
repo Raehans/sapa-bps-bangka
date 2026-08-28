@@ -4,26 +4,20 @@ from pydantic import BaseModel
 from transformers import pipeline
 from fuzzywuzzy import fuzz
 from database import get_db, engine
-from models import Base, HistoryMaster, HistoryDetail, FAQ
+from models import Base, FAQ
 from sqlalchemy.orm import Session
 import uvicorn
-from datetime import datetime
 import re
-import httpx
 import os
+import random
 
-# Buat tabel otomatis jika belum ada (Safe execution)
 try:
     Base.metadata.create_all(bind=engine)
 except Exception as e:
-    print(f"[WARN] Tidak dapat menghubungkan database pada saat startup: {e}")
+    print(f"[WARN] Database init: {e}")
 
-# Token Fonnte (Dapatkan dari fonnte.com setelah menghubungkan nomor WA Anda)
-FONNTE_TOKEN = os.getenv("FONNTE_TOKEN", "dHc8YyokJ2LLmF638XEK")
+app = FastAPI(title="SAPA BPS Kab. Bangka NLP Engine")
 
-app = FastAPI()
-
-# Configure CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -32,66 +26,36 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Load DialoGPT pipeline
 chatbot_pipeline = pipeline("text-generation", model="microsoft/DialoGPT-medium")
 
-# Default / Fallback FAQ Data
 DEFAULT_FAQ_DATA = {
-    "Hello!": "Hello, Selamat Datang di ChatStat BPS Kabupaten Bangka.",
-    "Apa itu BPS?": "Badan Pusat Statistik (BPS) adalah lembaga pemerintah yang bertugas menyediakan data statistik untuk Indonesia.",
-    "Bagaimana cara mengakses data BPS?": "Anda dapat mengakses data BPS melalui website resmi https://www.bps.go.id.",
-    "Apa saja layanan BPS?": "Layanan BPS meliputi publikasi data, konsultasi statistik, dan penyediaan data mikro untuk penelitian.",
-    "Jumlah Penduduk": "Jumlah penduduk Kab.Bangka 2024 menurut proyeksi penduduk sebanyak 342.058 <br> jiwa dengan rincian penduduk laki-laki 175.865 jiwa dan perempuan 166.193 jiwa.",
-    "Data Kemiskinan": "Jumlah penduduk miskin Kab.Bangka 2024 sebesar 14,76 ribu jiwa atau sebesar 4,24 persen penduduk miskin. <br> Untuk Indeks Kedalaman Kemiskinan (P1) sebesar 0,62 dan Indeks Keparahan Kemiskinan (P2) sebesar 0,14.",
-    "Pertumbuhan Ekonomi": "Pertumbuhan Ekonomi Kab.Bangka 2024 sebesar -0,44 persen. <br> Selama tahun 2024, perkonomian Kab.Bangka mengalami kontraksi di beberapa komoditas yang memiliki peranan besar pada perkonomian daerah, yaitu <br> industri pengolahan pertambangan dan penggalian serta lapangan usaha konstruksi. <br> Angka tahun 2024 adalah angka sangat sementara",
-    "Indeks Pembangunan Manusia (IPM)": "Nilai Indeks Pembangunan Manusia (IPM) Kab.Bangka tahun 2024 sebesar 74,66 dan masuk dalam kategori pembangunan manusia yang tinggi. Kab.Bangka menempati posisi ketiga kab/kota dengan nilai IPM tertinggi se-Prov.Kep.Bangka Belitung. <br> Dimensi IPM Kab.Bangka 2024: <br> Umur Harapan Hidup Saat Lahir: 73,24 tahun <br> Harapan Lama Sekolah: 13,12 tahun <br> Rata-rata Lama Sekolah: 8,45 tahun <br> Pengeluaran per Kapita Disesuaikan: 13.205 ribu rupiah per tahun",
-    "Tenaga Kerja": "Tingkat Partisipasi Angkatan Kerja (TPAK) Kab.Bangka 2024 sebesar 67,92 persen dan <br> Tingkat Pengangguran Terbuka (TPT) sebesar 4,91 persen.",
-    "Produk Domestik Regional Bruto (PDRB)": "Produk Domestik Regional Bruto (PDRB) Kab.Bangka 2024 menurut Harga Berlaku adalah <br> 20.003,49 miliar rupiah dan Harga Konstan 11.702,39 miliar rupiah. <br> Angka tahun 2024 adalah angka sangat sementara."
+    "Jumlah Penduduk": "Jumlah penduduk Kabupaten Bangka tahun 2024 (berdasarkan proyeksi penduduk) tercatat sebanyak *342.058 jiwa*.\n\n📊 *Rincian Kependudukan:*\n• Laki-laki: *175.865 jiwa*\n• Perempuan: *166.193 jiwa*",
+    "Data Kemiskinan": "Jumlah penduduk miskin di Kabupaten Bangka pada tahun 2024 tercatat sebesar *14,76 ribu jiwa* (sekitar 4,24% dari total penduduk).\n\n📊 *Indikator Kemiskinan:*\n• Indeks Kedalaman Kemiskinan (P1): *0,62*\n• Indeks Keparahan Kemiskinan (P2): *0,14*",
+    "Pertumbuhan Ekonomi": "Pertumbuhan ekonomi Kabupaten Bangka tahun 2024 tercatat sebesar *-0,44 persen*.\n\nPerekonomian mengalami sedikit kontraksi pada sektor industri pengolahan pertambangan & penggalian serta lapangan usaha konstruksi. _(Angka ini merupakan angka sangat sementara)_.",
+    "Indeks Pembangunan Manusia (IPM)": "Nilai Indeks Pembangunan Manusia (IPM) Kabupaten Bangka tahun 2024 mencapai *74,66* dan termasuk dalam kategori *Pembangunan Manusia Tinggi* (peringkat ke-3 se-Provinsi Kep. Bangka Belitung).\n\n📊 *Komponen IPM 2024:*\n• Umur Harapan Hidup: *73,24 tahun*\n• Harapan Lama Sekolah: *13,12 tahun*\n• Rata-rata Lama Sekolah: *8,45 tahun*\n• Pengeluaran per Kapita: *Rp 13.205.000,- / tahun*",
+    "Tenaga Kerja": "📊 *Data Ketenagakerjaan Kabupaten Bangka 2024:*\n• Tingkat Partisipasi Angkatan Kerja (TPAK): *67,92 persen*\n• Tingkat Pengangguran Terbuka (TPT): *4,91 persen*",
+    "Produk Domestik Regional Bruto (PDRB)": "📊 *Produk Domestik Regional Bruto (PDRB) Kab. Bangka 2024:*\n• Atas Dasar Harga Berlaku (ADHB): *Rp 20.003,49 miliar*\n• Atas Dasar Harga Konstan (ADHK): *Rp 11.702,39 miliar*\n_(Angka sangat sementara)_.",
+    "Apa itu BPS?": "🏛️ *Badan Pusat Statistik (BPS)* adalah lembaga pemerintah nonkementerian yang bertugas menyediakan data statistik dasar yang akurat, objektif, dan terpercaya untuk keperluan perencanaan serta evaluasi pembangunan nasional.",
+    "Apa saja layanan BPS?": "🏢 *Layanan Publik BPS Kabupaten Bangka meliputi:*\n1. Penyediaan Publikasi & Berita Resmi Statistik (BRS)\n2. Pelayanan Statistik Terpadu (PST) & Konsultasi Statistik\n3. Pembelian & Akses Data Mikro untuk Penelitian\n4. Rekomendasi Kegiatan Statistik Sektoral (ROMANTIK)",
+    "Bagaimana cara mengakses data BPS?": "🌐 Anda dapat mengakses seluruh data dan publikasi BPS secara gratis melalui portal resmi kami:\n👉 *BPS Kab. Bangka / Babel:* https://babel.bps.go.id\n👉 *Portal Nasional:* https://www.bps.go.id"
 }
 
-# Synonym mapping
 KEYWORD_SYNONYMS = {
-    "hello": [
-        "hello", "helo", "heloo", "helloo", "hai", "halo", "hallo", "haloo", "hay", "hell"
-    ],
-    "cara": [
-        "bagaimana", "gimana", "gmna", "cara", "cra", "carra", "craa"
-    ],
-    "akses": [
-        "mengakses", "akses", "aksesin", "aksess", "aksses", "aksek", "akss", "aksesnya", "akese"
-    ],
-    "data": [
-        "informasi", "informasii", "infomasi", "infro", "statistik", "statistk", "statik", "statikstik", "layanan", "laynaan", "layanann", "layaanan"
-    ],
-    "jumlah": [
-        "jumlah", "jml", "jmlh", "jumla", "jumalah", "jmlah", "jumllah", "jumlahh", "jumalh", "jmhlah"
-    ],
-    "kemiskinan": [
-        "kemiskinan", "kemisikan", "kemisikin", "kemisknn", "kmiskin", "kemsikinan", "kemiskinan", "kemiksinan", "kemiskina", "kmisikinan", "kmiskinan", "mampu"
-    ],
-    "ekonomi": [
-        "prtmbhn", "pertumbuhan", "ekonomi", "ekonmi", "ekonimi", "ekonmy", "eknmi", "econmi", "perkonomian", "perkonomian", "pertumbuhn", "pertnuhan"
-    ],
-    "indeks": [
-        "IPM", "ipm", "indeks", "index", "indek", "indekx", "indes", "pembangunan manusia", "harapan hidup", "harapan hidop", "lama sekolah", "perkapita", "per kapita", "prkapita", "pr capita", "perkapta"
-    ],
-    "kerja": [
-        "tenaga", "krja", "kerja", "kerjaa", "pengangguran", "penganggura", "penganguran", "nganggur", "nganggurr", "penganguran", "tenagakerja", "tenaga kerja", "tenaker"
-    ],
-    "produk": [
-        "produk", "PDRB", "pdrb", "prdk", "prodok", "prduk", "prdkk", "domestik", "domestk", "domsetik", "domistik", "regional", "regionl", "reginal", "regioal", "bruto", "brto", "brutoo", "brut", "berlaku", "berlku", "berlakuu", "berlakku", "konstan", "konstn", "konstann", "konstaan"
-    ],
-    "pdrb": [
-        "PDRB", "pdrb", "produk domestik regional bruto", "produk domstik regional bruto", "produk dometik regional bruto", "produk domstik regioal bruto", "produk dometik regonal brto"
-    ]
+    "cara": ["bagaimana", "gimana", "gmna", "cara", "cra", "carra", "craa"],
+    "akses": ["mengakses", "akses", "aksesin", "aksess", "aksses", "aksek", "akss", "aksesnya", "website", "web", "link", "unduh", "download"],
+    "data": ["informasi", "informasii", "infomasi", "infro", "statistik", "statistk", "statik", "layanan", "laynaan"],
+    "jumlah": ["jumlah", "jml", "jmlh", "jumla", "penduduk", "warga", "masyarakat", "populasi", "jiwa"],
+    "kemiskinan": ["kemiskinan", "miskin", "orang miskin", "tidak mampu", "kmiskin", "penduduk miskin"],
+    "ekonomi": ["pertumbuhan", "ekonomi", "ekonmi", "perkembangan", "perkonomian"],
+    "indeks": ["ipm", "indeks", "index", "pembangunan manusia", "harapan hidup", "sekolah", "perkapita"],
+    "kerja": ["tenaga", "kerja", "pengangguran", "nganggur", "angkatan kerja", "tenaga kerja", "pekerja"],
+    "pdrb": ["pdrb", "produk domestik", "produk domestik regional bruto", "pendapatan daerah", "adhb", "adhk"]
 }
-
 
 class UserInput(BaseModel):
     message: str
 
 def preprocess_input(message: str) -> str:
-    """Normalize and replace synonyms."""
     message = re.sub(r'\s+', ' ', message.strip().lower())
     for canonical, synonyms in KEYWORD_SYNONYMS.items():
         for synonym in synonyms:
@@ -99,73 +63,105 @@ def preprocess_input(message: str) -> str:
     return message
 
 def get_dynamic_faq_data(db: Session = None) -> dict:
-    """
-    Mengambil data FAQ dari tabel MySQL 'faqs'.
-    Otomatis melakukan seed jika tabel kosong, dan fallback aman ke DEFAULT_FAQ_DATA jika terjadi error.
-    """
     if db is None:
         return DEFAULT_FAQ_DATA
-
     try:
         faqs = db.query(FAQ).all()
-        # Jika tabel masih kosong, lakukan seeding otomatis dari DEFAULT_FAQ_DATA
         if not faqs:
             for q, a in DEFAULT_FAQ_DATA.items():
                 new_faq = FAQ(pertanyaan=q, jawaban=a)
                 db.add(new_faq)
             db.commit()
             faqs = db.query(FAQ).all()
-
         if faqs:
             return {faq.pertanyaan: faq.jawaban for faq in faqs}
     except Exception as e:
-        print(f"[WARN] Gagal membaca FAQ dari database, fallback ke data bawaan: {e}")
+        print(f"[WARN] Database fallback: {e}")
         try:
             db.rollback()
         except Exception:
             pass
-
     return DEFAULT_FAQ_DATA
 
+def get_friendly_greeting() -> str:
+    """Menghasilkan sapaan hangat dan ramah."""
+    greetings = [
+        "Halo! Selamat datang di layanan informasi BPS Kabupaten Bangka 😊 Ada data atau informasi yang bisa saya bantu carikan hari ini?\n\n💡 _Ketik *menu* jika ingin melihat daftar topik data yang tersedia._",
+        "Halo, Sobat Data! Senang bisa menyapa Anda. Silakan sampaikan apa yang ingin Anda tanyakan seputar data BPS Kabupaten Bangka.\n\n💡 _Ketik *menu* untuk melihat topik data resmi._",
+        "Hai! Selamat datang di asisten virtual BPS Kab. Bangka. Ada yang bisa kami bantu terkait statistik daerah?\n\n💡 _Ketik *menu* untuk melihat pilihan data._"
+    ]
+    return random.choice(greetings)
+
+def generate_dynamic_menu(faq_data: dict) -> str:
+    """Membuat daftar menu ketika diminta pengguna."""
+    emoji_numbers = ["1️⃣", "2️⃣", "3️⃣", "4️⃣", "5️⃣", "6️⃣", "7️⃣", "8️⃣", "9️⃣", "🔟"]
+    faq_items = [q for q in faq_data.keys() if q.lower() not in ["hello!", "hello", "halo", "hai"]]
+    menu_lines = []
+    
+    for idx, question in enumerate(faq_items):
+        icon = emoji_numbers[idx] if idx < len(emoji_numbers) else f"🔹 *{idx+1}.*"
+        menu_lines.append(f"{icon} *{question}*")
+
+    menu_list_text = "\n".join(menu_lines)
+
+    return (
+        f"📋 *PILIHAN TOPIK DATA BPS KAB. BANGKA*\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"Berikut beberapa topik informasi yang dapat Anda tanyakan:\n\n"
+        f"{menu_list_text}\n\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"💡 _Silakan balas dengan mengetik *Nomor* (misal: *1*) atau ketik pertanyaan Anda secara langsung._"
+    )
+
+def format_pretty_response(topic: str, content: str) -> str:
+    """Format jawaban bersahabat dan informatif."""
+    clean_content = content.replace("<br>", "\n").replace("<br/>", "\n").replace("<br />", "\n")
+    return (
+        f"📌 *{topic}*\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n"
+        f"{clean_content}\n\n"
+        f"━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n"
+        f"💡 _Ketik *menu* jika ingin melihat topik data lainnya._"
+    )
+
+def get_faq_by_index(index_num: int, faq_data: dict) -> tuple[str, str]:
+    faq_items = [q for q in faq_data.keys() if q.lower() not in ["hello!", "hello", "halo", "hai"]]
+    if 1 <= index_num <= len(faq_items):
+        target_question = faq_items[index_num - 1]
+        return target_question, faq_data[target_question]
+    return None, None
+
 def find_best_faq_match(user_message: str, faq_data: dict = None) -> tuple[str, int]:
-    """Mencari pertanyaan FAQ yang paling cocok dengan pesan pengguna."""
     if faq_data is None:
         faq_data = DEFAULT_FAQ_DATA
 
     original_message_lower = user_message.lower()
     processed_message = preprocess_input(user_message)
-
     best_match = None
     highest_score = 0
 
-    # 1. Prioritaskan kecocokan frasa kunci spesifik
-    if "pdrb" in original_message_lower or "produk domestik regional bruto" in original_message_lower:
+    if "pdrb" in original_message_lower or "produk domestik" in original_message_lower:
         for q_key in faq_data:
             if "pdrb" in q_key.lower() or "produk domestik" in q_key.lower():
                 return q_key, 100
 
-    # 2. Coba kecocokan langsung atau sangat mirip dengan kunci FAQ
     for question_key in faq_data:
         if user_message.strip().upper() == question_key.strip().upper():
             return question_key, 100
         if user_message.upper() in question_key.upper() and len(user_message) > 2:
             return question_key, 95
 
-    # 3. Fuzzy matching dengan pesan yang sudah diproses
     for question_key in faq_data:
         processed_question_key = preprocess_input(question_key)
-
         partial_score = fuzz.partial_ratio(processed_message, processed_question_key)
         token_sort_score = fuzz.token_sort_ratio(processed_message, processed_question_key)
         ratio_score = fuzz.ratio(processed_message, processed_question_key)
-
         combined_score = (partial_score * 0.5 + token_sort_score * 0.3 + ratio_score * 0.2)
 
         if combined_score > 70 and combined_score > highest_score:
             best_match = question_key
             highest_score = combined_score
 
-    # 4. Keyword fallback
     if not best_match:
         for question_key in faq_data:
             question_words = set(preprocess_input(question_key).split())
@@ -176,67 +172,48 @@ def find_best_faq_match(user_message: str, faq_data: dict = None) -> tuple[str, 
 
     return best_match, highest_score
 
-
 @app.post("/chat")
 async def chat(user_input: UserInput, db: Session = Depends(get_db)):
     user_message = user_input.message.strip()
-
-    # Ambil data FAQ dinamis dari Database MySQL
     faq_data = get_dynamic_faq_data(db)
 
-    # Validasi input pendek
     if len(user_message) <= 2:
         response_text = "Mohon masukkan pertanyaan yang lebih lengkap agar saya bisa membantu Anda."
     else:
-        # Cek pertanyaan mirip di FAQ dinamis
         best_match, score = find_best_faq_match(user_message, faq_data)
         if best_match and score > 70:
             response_text = faq_data[best_match]
         else:
-            # Tidak menggunakan DialoGPT untuk web
             response_text = "Maaf, informasi yang Anda cari belum tersedia di sistem kami. Silakan coba gunakan kata kunci lain."
 
     return {"response": response_text}
 
 @app.get("/faq")
 async def faq(db: Session = Depends(get_db)):
-    """Mengembalikan daftar FAQ yang aktif dari database."""
     return get_dynamic_faq_data(db)
-
-async def send_whatsapp_message(target: str, message: str):
-    """Mengirim pesan balasan ke WhatsApp menggunakan API Fonnte."""
-    url = "https://api.fonnte.com/send"
-    headers = {
-        "Authorization": FONNTE_TOKEN
-    }
-    
-    clean_message = re.sub(r'<br\s*/?>', '\n', message)
-    clean_message = re.sub(r'<[^>]+>', '', clean_message)
-    
-    data = {
-        "target": target,
-        "message": clean_message
-    }
-    
-    async with httpx.AsyncClient() as client:
-        try:
-            response = await client.post(url, headers=headers, data=data)
-            print(f"WhatsApp sent response: {response.json()}")
-            return response.json()
-        except Exception as e:
-            print(f"Error sending WhatsApp message to {target}: {e}")
-            return None
 
 @app.post("/webhook/whatsapp")
 async def whatsapp_webhook(request: Request, db: Session = Depends(get_db)):
-    """Endpoint Webhook untuk menerima pesan masuk dari WhatsApp."""
     content_type = request.headers.get("content-type", "")
+    data = {}
     
     if "application/json" in content_type:
-        data = await request.json()
+        try:
+            data = await request.json()
+        except Exception:
+            data = {}
     else:
-        form_data = await request.form()
-        data = dict(form_data)
+        try:
+            form_data = await request.form()
+            data = dict(form_data)
+        except Exception:
+            try:
+                body = await request.body()
+                from urllib.parse import parse_qs
+                parsed = parse_qs(body.decode('utf-8'))
+                data = {k: v[0] for k, v in parsed.items()}
+            except Exception:
+                data = {}
         
     sender = data.get("sender")
     message = data.get("message", "").strip()
@@ -244,18 +221,37 @@ async def whatsapp_webhook(request: Request, db: Session = Depends(get_db)):
     if not sender or not message:
         return {"status": "ignored", "reason": "sender or message is empty"}
         
-    # Ambil data FAQ dinamis dari Database MySQL
     faq_data = get_dynamic_faq_data(db)
+    msg_clean = message.strip().lower()
 
-    # Proses pencarian jawaban menggunakan logika chatbot
-    if len(message) <= 2:
-        response_text = "Mohon masukkan pertanyaan yang lebih lengkap agar saya bisa membantu Anda."
+    # 1. Sapaan Ramah (Greeting Manusiawi - Tidak langsung menjejalkan menu)
+    GREETINGS = ["halo", "hai", "hello", "helo", "hallo", "hay", "p", "assalamualaikum", "assalamu'alaikum", "selamat pagi", "selamat siang", "selamat sore", "selamat malam", "hi", "tes", "test"]
+    if msg_clean in GREETINGS:
+        response_text = get_friendly_greeting()
+
+    # 2. Permintaan Menu Khusus
+    elif msg_clean in ["menu", "bantuan", "help", "info", "daftar", "pilihan", "list", "topik"]:
+        response_text = generate_dynamic_menu(faq_data)
+
+    # 3. Pilihan Nomor Menu (1, 2, 3...)
+    elif msg_clean.isdigit():
+        choice_num = int(msg_clean)
+        q_title, q_ans = get_faq_by_index(choice_num, faq_data)
+        if q_title and q_ans:
+            response_text = format_pretty_response(q_title, q_ans)
+        else:
+            response_text = (
+                f"Maaf, topik nomor *{choice_num}* belum tersedia.\n\n"
+                f"{generate_dynamic_menu(faq_data)}"
+            )
+
+    # 4. Pencarian Pertanyaan Bebas / Statistik
     else:
         best_match, score = find_best_faq_match(message, faq_data)
         if best_match and score > 70:
-            response_text = faq_data[best_match]
+            response_text = format_pretty_response(best_match, faq_data[best_match])
         else:
-            # Fallback ke DialoGPT NLP
+            # Fallback ke AI DialoGPT dengan gaya asisten yang ramah
             try:
                 contextual_message = (
                     f"Apa itu {message}?" if len(message.split()) == 1 else message
@@ -273,16 +269,24 @@ async def whatsapp_webhook(request: Request, db: Session = Depends(get_db)):
                 if nlp_response.startswith(contextual_message):
                     nlp_response = nlp_response[len(contextual_message):].strip()
 
-                response_text = nlp_response or "Maaf, saya tidak bisa menghasilkan respons yang sesuai."
-            except Exception as e:
-                response_text = "Maaf, saat ini saya mengalami kendala teknis dalam memproses pertanyaan Anda."
+                if nlp_response and len(nlp_response) > 3:
+                    response_text = (
+                        f"{nlp_response}\n\n"
+                        f"─────────────────────────────\n"
+                        f"💡 _Ketik *menu* jika Anda mencari data resmi statistik BPS Kab. Bangka._"
+                    )
+                else:
+                    response_text = (
+                        f"Mohon maaf, saya belum menemukan data yang cocok untuk pertanyaan *\"{message}\"*.\n\n"
+                        f"Ketik *menu* untuk melihat daftar data statistik resmi yang tersedia di BPS Kabupaten Bangka."
+                    )
+            except Exception:
+                response_text = (
+                    f"Mohon maaf, saat ini pertanyaan *\"{message}\"* belum ada di database kami.\n\n"
+                    f"Silakan ketik *menu* untuk melihat daftar topik yang tersedia."
+                )
 
-    # Kirim balasan
-    if FONNTE_TOKEN != "YOUR_FONNTE_TOKEN_HERE" and FONNTE_TOKEN != "":
-        await send_whatsapp_message(sender, response_text)
-        return {"status": "success", "response": response_text}
-    else:
-        return {"status": "debug_success", "response": response_text, "note": "Local/Baileys response"}
+    return {"status": "success", "response": response_text}
 
 if __name__ == '__main__':
     uvicorn.run(app, port=8000, host='127.0.0.1')

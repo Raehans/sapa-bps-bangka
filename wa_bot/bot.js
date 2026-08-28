@@ -21,13 +21,14 @@ const NLP_URL = process.env.NLP_URL || 'http://127.0.0.1:8000/webhook/whatsapp';
 let isConnected = false;
 let reconnectTimeout = null;
 
-async function getAIResponse(sender, message) {
+async function getAIResponse(sender, message, botNumber) {
   try {
-    const params = new URLSearchParams();
-    params.append('sender', sender);
-    params.append('message', message);
-    const res = await axios.post(NLP_URL, params, {
-      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    const res = await axios.post(NLP_URL, {
+      sender: sender,
+      message: message,
+      bot_number: botNumber
+    }, {
+      headers: { 'Content-Type': 'application/json' },
       timeout: 30000
     });
     let answer = res.data.response || 'Maaf, saya tidak bisa menjawab.';
@@ -47,7 +48,6 @@ async function startBot() {
     const fetched = await fetchLatestBaileysVersion();
     if (fetched?.version) version = fetched.version;
   } catch (e) {
-    // Gunakan versi default jika fetch gagal
   }
 
   const logger = pino({ level: 'silent' });
@@ -74,9 +74,6 @@ async function startBot() {
       console.log('  Silakan Scan QR Code ini dengan WhatsApp: ');
       console.log('============================================\n');
       qrcode.generate(qr, { small: true });
-      console.log('\n  1. Buka WhatsApp di HP Anda');
-      console.log('  2. Pilih menu Titik Tiga (opsi) -> Perangkat Tertaut');
-      console.log('  3. Klik Tautkan Perangkat dan scan QR di atas.\n');
     }
     
     if (connection === 'open') {
@@ -93,14 +90,11 @@ async function startBot() {
       console.log(`[INFO] Koneksi terputus (Status: ${statusCode}). Mencoba menghubungkan kembali...`);
 
       if (statusCode === DisconnectReason.loggedOut || statusCode === 401) {
-        console.log('[INFO] Sesi tidak valid atau telah keluar. Mereset sesi dan membuat QR baru...');
         try {
           if (fs.existsSync(AUTH_DIR)) {
             fs.rmSync(AUTH_DIR, { recursive: true, force: true });
           }
-        } catch (err) {
-          console.error('[WARN] Gagal menghapus auth_info:', err.message);
-        }
+        } catch (err) {}
       }
 
       if (!reconnectTimeout) {
@@ -128,7 +122,8 @@ async function startBot() {
       console.log(`[PESAN MASUK] Dari: ${num} | Pesan: "${text}"`);
       try {
         await sock.sendPresenceUpdate('composing', jid);
-        const reply = await getAIResponse(num, text);
+        const botNumber = sock.user?.id ? sock.user.id.split(':')[0].replace(/\D/g, '') : '';
+        const reply = await getAIResponse(num, text, botNumber);
         await sock.sendMessage(jid, { text: reply }, { quoted: msg });
         console.log(`[BALASAN TERKIRIM] -> "${reply.substring(0, 80)}..."`);
       } catch (err) {
@@ -141,4 +136,4 @@ async function startBot() {
 startBot().catch(err => {
   console.error('[FATAL]', err);
   setTimeout(startBot, 5000);
-});
+});
