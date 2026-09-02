@@ -1,0 +1,385 @@
+{
+  "1": {
+    "judul": "Jumlah Penduduk Kabupaten Bangka",
+    "ringkasan": "Jumlah Penduduk Kabupaten Bangka (2025): 346.069 jiwa.",
+    "per_tahun": {
+      "2025": {
+        "jumlah_penduduk": "346.069 jiwa",
+        "sumber": "Proyeksi Penduduk 2020-2035 Hasil SP2020"
+      }
+    },
+    "text_blocks": {
+      "2025": "📍 Jumlah Penduduk Kabupaten Bangka Tahun 2025: 346.069 jiwa.\nSumber: Proyeksi Penduduk 2020-2035 Hasil SP2020."
+    }
+  },
+  "2": {
+    "judul": "Data Kemiskinan Kabupaten Bangka",
+    "per_lokasi_2025": {
+      "Bangka Barat": 2.92,
+      "Bangka Selatan": 4.17,
+      "Pangkal Pinang": 4.5,
+      "Bangka": 4.71,
+      "Belitung": 6.44,
+      "Belitung Timur": 6.69,
+      "Bangka Tengah": 6.7
+    },
+    "per_tahun": {
+      "2022": {
+        "jumlah_ribu_jiwa": 14.5,
+        "persentase": 4.26,
+        "garis_kemiskinan_rp": 639535,
+        "p1": 0.67,
+        "p2": 0.15
+      },
+      "2023": {
+        "jumlah_ribu_jiwa": 14.87,
+        "persentase": 4.32,
+        "garis_kemiskinan_rp": 685810,
+        "p1": 0.35,
+        "p2": 0.04
+      },
+      "2024": {
+        "jumlah_ribu_jiwa": 14.76,
+        "persentase": 4.24,
+        "garis_kemiskinan_rp": 723719,
+        "p1": 0.62,
+        "p2": 0.14
+      },
+      "2025": {
+        "jumlah_ribu_jiwa": 16.58,
+        "persentase": 4.71,
+        "garis_kemiskinan_rp": 734575,
+        "p1": 0.51,
+        "p2": 0.09
+      }
+    },
+    "definisi": {
+      "P1": "Indeks Kedalaman Kemiskinan - ukuran rata-rata kesenjangan pengeluaran penduduk miskin terhadap Garis Kemiskinan.",
+      "P2": "Indeks Keparahan Kemiskinan - gambaran penyebaran pengeluaran di antara penduduk miskin.",
+      "GK": "Garis Kemiskinan - jumlah rupiah minimum untuk memenuhi kebutuhan pokok makanan (2.100 kkal/kapita/hari) dan bukan makanan."
+    },
+    "text_blocks": {
+      "2022": "📅 Kemiskinan Kabupaten Bangka Tahun 2022:\n- Jumlah Penduduk Miskin: 14,50 ribu jiwa\n- Persentase: 4,26%\n- Garis Kemiskinan: Rp639.535/kapita/bulan\n- P1 (Kedalaman): 0,67\n- P2 (Keparahan): 0,15",
+      "2023": "📅 Kemiskinan Kabupaten Bangka Tahun 2023:\n- Jumlah Penduduk Miskin: 14,87 ribu jiwa\n- Persentase: 4,32%\n- Garis Kemiskinan: Rp685.810/kapita/bulan\n- P1 (Kedalaman): 0,35\n- P2 (Keparahan): 0,04",
+      "2024": "📅 Kemiskinan Kabupaten Bangka Tahun 2024:\n- Jumlah Penduduk Miskin: 14,76 ribu jiwa\n- Persentase: 4,24%\n- Garis Kemiskinan: Rp723.719/kapita/bulan\n- P1 (Kedalaman): 0,62\n- P2 (Keparahan): 0,14",
+      "2025": "📅 Kemiskinan Kabupaten Bangka Tahun 2025:\n- Jumlah Penduduk Miskin: 16,58 ribu jiwa\n- Persentase: 4,71%\n- Garis Kemiskinan: Rp734.575/kapita/bulan\n- P1 (Kedalaman): 0,51\n- P2 (Keparahan): 0,09",
+      "lokasi_Bangka Barat": "📍 Persentase Penduduk Miskin Bangka Barat (2025): 2,92%.",
+      "lokasi_Bangka Selatan": "📍 Persentase Penduduk Miskin Bangka Selatan (2025): 4,17%.",
+      "lokasi_Pangkal Pinang": "📍 Persentase Penduduk Miskin Pangkal Pinang (2025): 4,50%.",
+      "lokasi_Bangka": "📍 Persentase Penduduk Miskin Kabupaten Bangka (2025): 4,71%.",
+      "lokasi_Belitung": "📍 Persentase Penduduk Miskin Belitung (2025): 6,44%.",
+      "lokasi_Belitung Timur": "📍 Persentase Penduduk Miskin Belitung Timur (2025): 6,69%.",
+      "lokasi_Bangka Tengah": "📍 Persentase Penduduk Miskin Bangka Tengah (2025): 6,70%."
+    }
+  },
+  "3": {
+    "judul": "Pertumbuhan Ekonomi Kabupaten Bangka",
+    "per_tahun": {
+      "2021": {
+        "laju_persen": 7.46,
+        "keterangan": ""
+      },
+      "2022": {
+        "laju_persen": 4.86,
+        "keterangan": ""
+      },
+      "2023": {
+        "laju_persen": 4.42,
+        "keterangan": "Angka Sementara (*)"
+      },
+      "2024": {
+        "laju_persen": -0.44,
+        "keterangan": "Angka Sangat Sementara (**)"
+      }
+    },
+    "per_triwulan_2025": {
+      "Triwulan I": 5.28,
+      "Triwulan II": 4.14,
+      "Triwulan III": 5.19
+    },
+    "per_sektor_2024": {
+      "A. Pertanian, Kehutanan, dan Perikanan": 2.39,
+      "B. Pertambangan dan Penggalian": -5.37,
+      "C. Industri Pengolahan": -6.73,
+      "D. Pengadaan Listrik dan Gas": 6.24,
+      "E. Pengadaan Air; Pengelolaan Sampah, Limbah, dan Daur Ulang": 3.83,
+      "F. Konstruksi": -0.55,
+      "G. Perdagangan Besar dan Eceran; Reparasi Mobil dan Sepeda Motor": 0.97,
+      "H. Transportasi dan Pergudangan": 5.16,
+      "I. Penyediaan Akomodasi dan Makan Minum": 4.04,
+      "J. Informasi dan Komunikasi": 10.64,
+      "K. Jasa Keuangan dan Asuransi": 0.12,
+      "L. Real Estat": 3.61,
+      "M,N. Jasa Perusahaan": 7.07,
+      "O. Administrasi Pemerintahan, Pertahanan, dan Jaminan Sosial Wajib": 7.78,
+      "P. Jasa Pendidikan": 10.56,
+      "Q. Jasa Kesehatan dan Kegiatan Sosial": 2.21,
+      "R,S,T,U. Jasa Lainnya": 8.39
+    },
+    "text_blocks": {
+      "2021": "📅 Laju Pertumbuhan Ekonomi Kabupaten Bangka Tahun 2021: 7,46%.",
+      "2022": "📅 Laju Pertumbuhan Ekonomi Kabupaten Bangka Tahun 2022: 4,86%.",
+      "2023": "📅 Laju Pertumbuhan Ekonomi Kabupaten Bangka Tahun 2023*: 4,42%. (*Angka Sementara)",
+      "2024": "📅 Laju Pertumbuhan Ekonomi Kabupaten Bangka Tahun 2024**: -0,44%. (**Angka Sangat Sementara)",
+      "triwulan_I_2025": "📅 Laju Pertumbuhan Ekonomi Triwulan I 2025*** (y-on-y): 5,28%.",
+      "triwulan_II_2025": "📅 Laju Pertumbuhan Ekonomi Triwulan II 2025*** (y-on-y): 4,14%.",
+      "triwulan_III_2025": "📅 Laju Pertumbuhan Ekonomi Triwulan III 2025*** (y-on-y): 5,19%."
+    }
+  },
+  "4": {
+    "judul": "Indeks Pembangunan Manusia (IPM) Kabupaten Bangka",
+    "per_tahun": {
+      "2021": {
+        "ipm": 73.13,
+        "uhh": 72.56,
+        "rls": 8.25,
+        "hls": 12.78,
+        "pengeluaran_ribu_rp": 12424
+      },
+      "2022": {
+        "ipm": 73.62,
+        "uhh": 72.8,
+        "rls": 8.27,
+        "hls": 12.8,
+        "pengeluaran_ribu_rp": 12863
+      },
+      "2023": {
+        "ipm": 74.34,
+        "uhh": 73.03,
+        "rls": 8.32,
+        "hls": 13.11,
+        "pengeluaran_ribu_rp": 13146
+      },
+      "2024": {
+        "ipm": 74.66,
+        "uhh": 73.24,
+        "rls": 8.45,
+        "hls": 13.12,
+        "pengeluaran_ribu_rp": 13205
+      },
+      "2025": {
+        "ipm": 75.38,
+        "uhh": 73.56,
+        "rls": 8.77,
+        "hls": 13.13,
+        "pengeluaran_ribu_rp": 13411
+      }
+    },
+    "pertumbuhan_ipm_2025_persen": 0.96,
+    "definisi": {
+      "UHH": "Umur Harapan Hidup - rata-rata perkiraan tahun yang dapat ditempuh seseorang sejak lahir.",
+      "RLS": "Rata-Rata Lama Sekolah - jumlah tahun yang dijalani penduduk usia 25 tahun ke atas dalam pendidikan formal.",
+      "HLS": "Harapan Lama Sekolah - lama sekolah yang diharapkan dirasakan anak usia 7 tahun ke atas di masa mendatang.",
+      "Pengeluaran per kapita disesuaikan": "Biaya konsumsi seorang anggota rumah tangga dalam satu tahun (ribu rupiah)."
+    },
+    "text_blocks": {
+      "2021": "📅 IPM Kabupaten Bangka Tahun 2021: 73,13\n- Umur Harapan Hidup: 72,56 tahun\n- Rata-Rata Lama Sekolah: 8,25 tahun\n- Harapan Lama Sekolah: 12,78 tahun\n- Pengeluaran per Kapita: Rp12.424 ribu",
+      "2022": "📅 IPM Kabupaten Bangka Tahun 2022: 73,62\n- Umur Harapan Hidup: 72,80 tahun\n- Rata-Rata Lama Sekolah: 8,27 tahun\n- Harapan Lama Sekolah: 12,80 tahun\n- Pengeluaran per Kapita: Rp12.863 ribu",
+      "2023": "📅 IPM Kabupaten Bangka Tahun 2023: 74,34\n- Umur Harapan Hidup: 73,03 tahun\n- Rata-Rata Lama Sekolah: 8,32 tahun\n- Harapan Lama Sekolah: 13,11 tahun\n- Pengeluaran per Kapita: Rp13.146 ribu",
+      "2024": "📅 IPM Kabupaten Bangka Tahun 2024: 74,66\n- Umur Harapan Hidup: 73,24 tahun\n- Rata-Rata Lama Sekolah: 8,45 tahun\n- Harapan Lama Sekolah: 13,12 tahun\n- Pengeluaran per Kapita: Rp13.205 ribu",
+      "2025": "📅 IPM Kabupaten Bangka Tahun 2025: 75,38 (naik 0,96% dari 2024)\n- Umur Harapan Hidup: 73,56 tahun\n- Rata-Rata Lama Sekolah: 8,77 tahun\n- Harapan Lama Sekolah: 13,13 tahun\n- Pengeluaran per Kapita: Rp13.411 ribu"
+    }
+  },
+  "5": {
+    "judul": "Tenaga Kerja Kabupaten Bangka (TPAK & TPT)",
+    "per_tahun": {
+      "2021": {
+        "tpak_persen": 62.68,
+        "tpt_persen": 5.97
+      },
+      "2022": {
+        "tpak_persen": 68.81,
+        "tpt_persen": 5.39
+      },
+      "2023": {
+        "tpak_persen": 67.46,
+        "tpt_persen": 5.03
+      },
+      "2024": {
+        "tpak_persen": 67.92,
+        "tpt_persen": 4.91
+      },
+      "2025": {
+        "tpak_persen": 67.93,
+        "tpt_persen": 4.75
+      }
+    },
+    "definisi": {
+      "TPAK": "Tingkat Partisipasi Angkatan Kerja - mengukur besarnya jumlah angkatan kerja di suatu wilayah.",
+      "TPT": "Tingkat Pengangguran Terbuka - mencerminkan besarnya jumlah penduduk usia kerja yang termasuk kategori pengangguran."
+    },
+    "text_blocks": {
+      "2021": "📅 Tenaga Kerja Kabupaten Bangka Tahun 2021:\n- TPAK: 62,68%\n- TPT: 5,97%",
+      "2022": "📅 Tenaga Kerja Kabupaten Bangka Tahun 2022:\n- TPAK: 68,81%\n- TPT: 5,39%",
+      "2023": "📅 Tenaga Kerja Kabupaten Bangka Tahun 2023:\n- TPAK: 67,46%\n- TPT: 5,03%",
+      "2024": "📅 Tenaga Kerja Kabupaten Bangka Tahun 2024:\n- TPAK: 67,92%\n- TPT: 4,91%",
+      "2025": "📅 Tenaga Kerja Kabupaten Bangka Tahun 2025:\n- TPAK: 67,93%\n- TPT: 4,75%"
+    }
+  },
+  "6": {
+    "judul": "Produk Domestik Regional Bruto (PDRB) Kabupaten Bangka",
+    "per_tahun": {
+      "2021": {
+        "adhb_miliar_rp": 16166.01,
+        "adhk_miliar_rp": 10733.86,
+        "keterangan": ""
+      },
+      "2022": {
+        "adhb_miliar_rp": 17956.28,
+        "adhk_miliar_rp": 11255.79,
+        "keterangan": ""
+      },
+      "2023": {
+        "adhb_miliar_rp": 19279.6,
+        "adhk_miliar_rp": 11753.74,
+        "keterangan": "Angka Sementara (*)"
+      },
+      "2024": {
+        "adhb_miliar_rp": 20003.49,
+        "adhk_miliar_rp": 11702.39,
+        "keterangan": "Angka Sangat Sementara (**)"
+      }
+    },
+    "per_triwulan_2025": {
+      "Triwulan I": {
+        "adhb_miliar_rp": 5112.05,
+        "adhk_miliar_rp": 2911.99
+      },
+      "Triwulan II": {
+        "adhb_miliar_rp": 5461.29,
+        "adhk_miliar_rp": 3078.58
+      },
+      "Triwulan III": {
+        "adhb_miliar_rp": 5498.78,
+        "adhk_miliar_rp": 3077.85
+      }
+    },
+    "distribusi_sektor_2024_persen": {
+      "A. Pertanian, Kehutanan, dan Perikanan": 21.21,
+      "B. Pertambangan dan Penggalian": 8.17,
+      "C. Industri Pengolahan": 24.24,
+      "D. Pengadaan Listrik dan Gas": 0.22,
+      "E. Pengadaan Air, Pengolahan Sampah, Limbah dan Daur Ulang": 0.02,
+      "F. Konstruksi": 9.18,
+      "G. Perdagangan Besar dan Eceran; Reparasi Mobil dan Sepeda Motor": 13.09,
+      "H. Transportasi dan Pergudangan": 2.6,
+      "I. Penyediaan Akomodasi dan Makan Minum": 3.21,
+      "J. Informasi dan Komunikasi": 2.62,
+      "K. Jasa Keuangan dan Asuransi": 2.81,
+      "L. Real Estat": 3.39,
+      "M, N. Jasa Perusahaan": 0.28,
+      "O. Administrasi Pemerintahan, Pertahanan dan Jaminan Sosial Wajib": 4.61,
+      "P. Jasa Pendidikan": 2.44,
+      "Q. Jasa Kesehatan dan Kegiatan Sosial": 1.05,
+      "R, S, T, U. Jasa Lainnya": 0.87
+    },
+    "definisi": {
+      "ADHB": "Atas Dasar Harga Berlaku (nilai nominal).",
+      "ADHK": "Atas Dasar Harga Konstan (nilai riil)."
+    },
+    "text_blocks": {
+      "2021": "📅 PDRB Kabupaten Bangka Tahun 2021:\n- ADHB: Rp16.166,01 Miliar\n- ADHK: Rp10.733,86 Miliar",
+      "2022": "📅 PDRB Kabupaten Bangka Tahun 2022:\n- ADHB: Rp17.956,28 Miliar\n- ADHK: Rp11.255,79 Miliar",
+      "2023": "📅 PDRB Kabupaten Bangka Tahun 2023*:\n- ADHB: Rp19.279,60 Miliar\n- ADHK: Rp11.753,74 Miliar\n(*Angka Sementara)",
+      "2024": "📅 PDRB Kabupaten Bangka Tahun 2024**:\n- ADHB: Rp20.003,49 Miliar\n- ADHK: Rp11.702,39 Miliar\n(**Angka Sangat Sementara)",
+      "triwulan_I_2025": "📅 PDRB Triwulan I 2025***:\n- ADHB: Rp5.112,05 Miliar\n- ADHK: Rp2.911,99 Miliar",
+      "triwulan_II_2025": "📅 PDRB Triwulan II 2025***:\n- ADHB: Rp5.461,29 Miliar\n- ADHK: Rp3.078,58 Miliar",
+      "triwulan_III_2025": "📅 PDRB Triwulan III 2025***:\n- ADHB: Rp5.498,78 Miliar\n- ADHK: Rp3.077,85 Miliar"
+    }
+  },
+  "7": {
+    "judul": "Indeks Pembangunan Gender (IPG) Kabupaten Bangka",
+    "tersedia": true,
+    "per_tahun": {
+      "2020": 88.48,
+      "2021": 88.36,
+      "2022": 88.84,
+      "2023": 89.24,
+      "2024": 89.07,
+      "2025": 89.36
+    },
+    "definisi": "Indeks Pembangunan Gender (IPG) mengukur rasio perbandingan pencapaian pembangunan manusia (IPM) antara perempuan dan laki-laki. Angka yang mendekati 100 menunjukkan kesetaraan gender yang semakin baik.",
+    "text_blocks": {
+      "2025": "📅 *IPG Kab. Bangka Tahun 2025:*\nIndeks Pembangunan Gender (IPG) tercatat sebesar *89,36* (mengalami peningkatan dari tahun 2024 sebesar 89,07).",
+      "default": "⚖️ *INDEKS PEMBANGUNAN GENDER (IPG) KAB. BANGKA*\n\n🌟 *Tahun 2025:* IPG tercatat sebesar *89,36* (naik dari 89,07 pada 2024).\n\n📈 *Tren Perkembangan IPG (2020 – 2025):*\n• *2025:* *89,36* ⬆️\n• *2024:* *89,07*\n• *2023:* *89,24*\n• *2022:* *88,84*\n• *2021:* *88,36*\n• *2020:* *88,48*\n\n💡 *Definisi & Makna Statistik BPS:*\n• *IPG:* Mengukur rasio pencapaian IPM antara perempuan dan laki-laki pada dimensi kesehatan, pendidikan, dan ekonomi.\n• Angka IPG yang semakin mendekati *100* menunjukkan kesetaraan pembangunan gender di Kabupaten Bangka semakin merata."
+    }
+  },
+  "8": {
+    "judul": "Dimensi Pendidikan (RLS & HLS) Kabupaten Bangka",
+    "tersedia": true,
+    "per_tahun": {
+      "2021": {
+        "hls_tahun": 12.78,
+        "rls_tahun": 8.25
+      },
+      "2022": {
+        "hls_tahun": 12.8,
+        "rls_tahun": 8.27
+      },
+      "2023": {
+        "hls_tahun": 13.11,
+        "rls_tahun": 8.32
+      },
+      "2024": {
+        "hls_tahun": 13.12,
+        "rls_tahun": 8.45
+      },
+      "2025": {
+        "hls_tahun": 13.13,
+        "rls_tahun": 8.77
+      }
+    },
+    "definisi": {
+      "RLS": "Rata-Rata Lama Sekolah - jumlah tahun yang dijalani penduduk usia 25 tahun ke atas dalam pendidikan formal.",
+      "HLS": "Harapan Lama Sekolah - lama sekolah (tahun) yang diharapkan akan dirasakan anak usia 7 tahun ke atas di masa mendatang."
+    },
+    "text_blocks": {
+      "2021": "📅 *Pendidikan Kab. Bangka Tahun 2021:*\n- Harapan Lama Sekolah (HLS): *12,78 tahun*\n- Rata-Rata Lama Sekolah (RLS): *8,25 tahun*",
+      "2022": "📅 *Pendidikan Kab. Bangka Tahun 2022:*\n- Harapan Lama Sekolah (HLS): *12,80 tahun*\n- Rata-Rata Lama Sekolah (RLS): *8,27 tahun*",
+      "2023": "📅 *Pendidikan Kab. Bangka Tahun 2023:*\n- Harapan Lama Sekolah (HLS): *13,11 tahun*\n- Rata-Rata Lama Sekolah (RLS): *8,32 tahun*",
+      "2024": "📅 *Pendidikan Kab. Bangka Tahun 2024:*\n- Harapan Lama Sekolah (HLS): *13,12 tahun*\n- Rata-Rata Lama Sekolah (RLS): *8,45 tahun*",
+      "2025": "📅 *Pendidikan Kab. Bangka Tahun 2025:*\n- Harapan Lama Sekolah (HLS): *13,13 tahun*\n- Rata-Rata Lama Sekolah (RLS): *8,77 tahun*",
+      "default": "📚 *DIMENSI PENDIDIKAN KABUPATEN BANGKA (2021-2025)*\n\n📖 *Harapan Lama Sekolah (HLS, tahun):*\n• 2021: *12,78 tahun*\n• 2022: *12,80 tahun*\n• 2023: *13,11 tahun*\n• 2024: *13,12 tahun*\n• 2025: *13,13 tahun*\n\n🎓 *Rata-Rata Lama Sekolah (RLS, tahun):*\n• 2021: *8,25 tahun*\n• 2022: *8,27 tahun*\n• 2023: *8,32 tahun*\n• 2024: *8,45 tahun*\n• 2025: *8,77 tahun*\n\n💡 *Definisi Resmi BPS:*\n• *RLS:* Jumlah tahun yang dijalani penduduk usia 25 tahun ke atas dalam pendidikan formal.\n• *HLS:* Lama sekolah yang diharapkan dirasakan anak usia 7 tahun ke atas di masa mendatang."
+    }
+  },
+  "9": {
+    "judul": "Layanan BPS Kabupaten Bangka",
+    "text_blocks": {
+      "default": "📋 Layanan BPS Kabupaten Bangka meliputi:\n- Pelayanan Statistik Terpadu (PST): permintaan data & konsultasi statistik\n- Publikasi statistik (cetak & digital) melalui bangkakab.bps.go.id\n- Rekomendasi survei/riset kegiatan statistik\n- Konsultasi statistik sektoral untuk pemerintah, akademisi, dan masyarakat umum\n\nUntuk info lebih lengkap, silakan hubungi Petugas PST BPS (ketik 10)."
+    }
+  },
+  "10": {
+    "judul": "Kontak Petugas PST BPS Kabupaten Bangka",
+    "text_blocks": {
+      "default": "📞 Hubungi Petugas PST BPS Kabupaten Bangka:\n🏢 Alamat: Jl. Ahmad Yani Jalur Dua, Sungailiat\n☎️ Telp/Fax: (0717) 92492\n🌐 Homepage: http://bangkakab.bps.go.id\n✉️ Email: bps1901@bps.go.id"
+    }
+  },
+  "meta": {
+    "judul": "Indikator Makro Kabupaten Bangka Tahun 2025",
+    "sumber": "Badan Pusat Statistik (BPS) Kabupaten Bangka",
+    "kontak": {
+      "alamat": "Jl. Ahmad Yani Jalur Dua, Sungailiat",
+      "telp_fax": "(0717) 92492",
+      "homepage": "http://bangkakab.bps.go.id",
+      "email": "bps1901@bps.go.id"
+    },
+    "catatan_simbol": {
+      "*": "Angka Sementara",
+      "**": "Angka Sangat Sementara",
+      "***": "Angka Sangat Sangat Sementara"
+    }
+  },
+  "menu": {
+    "1": "Jumlah Penduduk",
+    "2": "Data Kemiskinan",
+    "3": "Pertumbuhan Ekonomi",
+    "4": "Indeks Pembangunan Manusia (IPM)",
+    "5": "Tenaga Kerja",
+    "6": "Produk Domestik Regional Bruto (PDRB)",
+    "7": "Indeks Pembangunan Gender (IPG)",
+    "8": "Dimensi Pendidikan (RLS & HLS)",
+    "9": "Apa saja layanan BPS?",
+    "10": "Hubungi Petugas PST BPS"
+  },
+  "menu_text": "📋 PILIHAN TOPIK DATA BPS KAB. BANGKA\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nBerikut beberapa topik informasi yang dapat Anda tanyakan:\n\n1️⃣ Jumlah Penduduk\n2️⃣ Data Kemiskinan\n3️⃣ Pertumbuhan Ekonomi\n4️⃣ Indeks Pembangunan Manusia (IPM)\n5️⃣ Tenaga Kerja\n6️⃣ Produk Domestik Regional Bruto (PDRB)\n7️⃣ Indeks Pembangunan Gender (IPG)\n8️⃣ Angka Partisipasi Sekolah\n9️⃣ Apa saja layanan BPS?\n🔟 Hubungi Petugas PST BPS\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n💡 Silakan balas dengan mengetik Nomor (misal: 1), ketik pertanyaan langsung, atau ketik 'petugas' untuk layanan PST."
+}

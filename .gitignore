@@ -1,16 +1,31 @@
-# Python virtual environment
+﻿# Node modules & dependencies
+node_modules/
+package-lock.json
+
+# WhatsApp Authentication & Sessions (RAHASIA / PRIVATE)
+auth_info/
+wa_credentials/
+baileys_store.json
+
+# Model AI GGUF & Binaries (Ukuran GigaBytes - Dilarang Masuk Git)
+models/
+bin/
+*.gguf
+
+# Environment & Secrets (SENSITIF: Password DB & API Key)
+.env
+wa_bot/.env
+
+# Python & Legacy Archives
 NLP/nlp/
 NLP/**/venv/
 NLP/**/.venv/
-
-# Python cache
 __pycache__/
 *.pyc
+_ARSIP_SISA_PYTHON_LAMA_/
+analisis kan cuy/
 
-# WhatsApp bot
-wa_bot/node_modules/
-wa_bot/auth_info/
-
-# Environment variables
-.env
-wa_bot/.env
+# Logs & Temporary files
+*.log
+npm-debug.log*
+test*.ts
