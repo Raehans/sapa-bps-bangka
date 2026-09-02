@@ -1,0 +1,978 @@
+﻿<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel Kelola Data Chatbot BPS Kab. Bangka</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #02639B;
+      --primary-dark: #013f63;
+      --primary-light: #e6f1f8;
+      --success: #00A760;
+      --success-light: #e6f7ef;
+      --accent: #F47920;
+      --accent-light: #fef2e9;
+      --background: #f8fafc;
+      --card: #ffffff;
+      --foreground: #0f172a;
+      --muted: #f1f5f9;
+      --muted-foreground: #64748b;
+      --border: #e2e8f0;
+      --radius: 12px;
+      --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.05), 0 10px 25px -5px rgba(2,99,155,0.08);
+      --shadow-raised: 0 12px 32px -10px rgba(2,99,155,0.35);
+      --gradient-bps: linear-gradient(120deg, #013f63 0%, #02639B 55%, #0ea5e9 100%);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-sans);
+      background: var(--background);
+      color: var(--foreground);
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* BPS Ribbon Stripe */
+    .bps-stripe {
+      height: 6px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--primary) 0 33.33%, var(--success) 33.33% 66.66%, var(--accent) 66.66% 100%);
+    }
+
+    /* Header */
+    header {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 40;
+    }
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .bps-logo-box {
+      width: 44px;
+      height: 44px;
+      background: var(--gradient-bps);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      box-shadow: var(--shadow-raised);
+      flex-shrink: 0;
+    }
+    .header-text { min-width: 0; }
+    .header-title {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+    .header-subtitle {
+      font-size: 12px;
+      color: var(--muted-foreground);
+    }
+    .header-badge {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      background: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      box-shadow: 0 0 0 2px var(--success-light);
+    }
+
+    /* Main Container */
+    main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 28px 24px 60px;
+    }
+
+    /* Hero Banner */
+    .hero-banner {
+      background: var(--gradient-bps);
+      border-radius: var(--radius);
+      padding: 32px 36px;
+      color: white;
+      box-shadow: var(--shadow-raised);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-banner::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      bottom: -60px;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-tag {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    .hero-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-top: 6px;
+      line-height: 1.25;
+    }
+    .hero-desc {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.88);
+      max-width: 680px;
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 4px;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      font-family: inherit;
+    }
+    .btn-secondary {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+    .btn-secondary:hover {
+      background: #f1f5f9;
+      transform: translateY(-1px);
+    }
+    .btn-outline-hero {
+      background: transparent;
+      color: white;
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+    .btn-outline-hero:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+    .btn-outline {
+      background: white;
+      color: var(--foreground);
+      border-color: var(--border);
+    }
+    .btn-outline:hover {
+      background: var(--muted);
+    }
+    .btn-danger-ghost {
+      background: transparent;
+      color: #ef4444;
+      border: none;
+      padding: 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .btn-danger-ghost:hover {
+      background: #fee2e2;
+    }
+
+    /* Stat Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      box-shadow: var(--shadow-card);
+    }
+    .stat-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .stat-icon.primary { background: var(--primary-light); color: var(--primary); }
+    .stat-icon.success { background: var(--success-light); color: var(--success); }
+    .stat-icon.accent  { background: var(--accent-light);  color: var(--accent); }
+    .stat-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted-foreground);
+    }
+    .stat-value {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--foreground);
+      margin-top: 4px;
+    }
+    .stat-note {
+      font-size: 12px;
+      color: var(--muted-foreground);
+      margin-top: 2px;
+    }
+
+    /* Table Card */
+    .table-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-top: 24px;
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+    .table-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .table-header-title h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--foreground);
+    }
+    .table-header-title p {
+      font-size: 13px;
+      color: var(--muted-foreground);
+      margin-top: 2px;
+    }
+    .search-box {
+      position: relative;
+      width: 100%;
+      max-width: 320px;
+    }
+    .search-input {
+      width: 100%;
+      padding: 9px 14px 9px 38px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--muted);
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .search-input:focus {
+      background: white;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(2,99,155,0.12);
+    }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--muted-foreground);
+      pointer-events: none;
+    }
+
+    /* Table */
+    .table-responsive {
+      overflow-x: auto;
+      width: 100%;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+    }
+    thead tr {
+      background: #f8fafc;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      padding: 12px 16px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted-foreground);
+    }
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+    }
+    tbody tr:hover {
+      background: #f8fafc;
+    }
+    td {
+      padding: 18px 16px;
+      vertical-align: top;
+    }
+    .td-num {
+      font-weight: 700;
+      color: var(--muted-foreground);
+      font-variant-numeric: tabular-nums;
+      width: 50px;
+      text-align: center;
+    }
+    .topic-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--foreground);
+    }
+    .badge-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .badge-cat {
+      background: var(--muted);
+      color: var(--primary-dark);
+      border: 1px solid var(--border);
+    }
+    .badge-available {
+      background: var(--success-light);
+      color: var(--success);
+    }
+    .faq-content {
+      color: #334155;
+      line-height: 1.6;
+      max-width: 650px;
+      white-space: pre-line;
+      word-break: break-word;
+    }
+    .faq-content strong, .faq-content b {
+      color: var(--foreground);
+      font-weight: 700;
+    }
+    .meta-row {
+      margin-top: 10px;
+      font-size: 11px;
+      color: var(--muted-foreground);
+      display: flex;
+      gap: 14px;
+    }
+    .actions-cell {
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    /* Modal Backdrop */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 50;
+      padding: 20px;
+    }
+    .modal-backdrop.active { display: flex; }
+    .modal-box {
+      background: white;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 860px;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+      border: 1px solid var(--border);
+      animation: modalSlide 0.2s ease-out;
+    }
+    @keyframes modalSlide {
+      from { opacity: 0; transform: translateY(16px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h3 { font-size: 18px; font-weight: 700; }
+    .btn-close {
+      background: transparent;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: var(--muted-foreground);
+    }
+    .modal-body {
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    @media (max-width: 768px) {
+      .modal-body { grid-template-columns: 1fr; }
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--foreground);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .form-input, .form-textarea {
+      width: 100%;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      font-size: 13px;
+      font-family: inherit;
+      outline: none;
+    }
+    .form-input:focus, .form-textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(2,99,155,0.12);
+    }
+    .form-textarea {
+      min-height: 220px;
+      resize: vertical;
+      line-height: 1.5;
+    }
+
+    /* Live WhatsApp Bubble Preview */
+    .preview-panel {
+      background: #efeae2;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #cbd5e1;
+      position: relative;
+    }
+    .preview-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #475569;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wa-bubble {
+      background: #ffffff;
+      border-radius: 0 12px 12px 12px;
+      padding: 14px 16px;
+      font-size: 13.5px;
+      color: #111b21;
+      line-height: 1.55;
+      box-shadow: 0 1px 2px rgba(11,20,26,0.15);
+      word-break: break-word;
+      white-space: normal;
+      position: relative;
+      flex: 1;
+    }
+    .wa-bubble strong, .wa-bubble b {
+      color: #111b21 !important;
+      font-weight: 700;
+    }
+    .wa-bubble em, .wa-bubble i {
+      font-style: italic;
+    }
+    .wa-bubble del {
+      text-decoration: line-through;
+      color: #64748b;
+    }
+    .wa-time {
+      font-size: 11px;
+      color: #667781;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+      margin-top: 10px;
+    }
+    .modal-footer {
+      padding: 16px 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      background: #f8fafc;
+      border-radius: 0 0 16px 16px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      font-size: 12px;
+      color: var(--muted-foreground);
+    }
+    footer a { color: var(--primary); text-decoration: none; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <div class="bps-stripe"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-container">
+      <div class="bps-logo-box">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 3v18h18"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>
+        </svg>
+      </div>
+      <div class="header-text">
+        <div class="header-title">BADAN PUSAT STATISTIK</div>
+        <div class="header-subtitle">Kabupaten Bangka • Provinsi Kepulauan Bangka Belitung</div>
+      </div>
+      <div class="header-badge">
+        <span class="badge-dot"></span>
+        <span>Admin BPS Aktif</span>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Banner -->
+    <section class="hero-banner">
+      <div>
+        <div class="hero-tag">LAYANAN STATISTIK DIGITAL</div>
+        <h1 class="hero-title">Panel Kelola Data Chatbot WhatsApp</h1>
+        <p class="hero-desc">
+          Perbarui topik dan jawaban statistik yang dilayani chatbot BPS Kabupaten Bangka.
+          Semudah mengetik pesan, langsung tayang ke pengguna WhatsApp secara real-time.
+        </p>
+      </div>
+      <div class="hero-actions">
+        <button class="btn btn-secondary" onclick="openAddModal()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          Tambah Data Baru
+        </button>
+        <a href="/api/download-csv" class="btn btn-outline-hero" download>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Unduh Cadangan CSV
+        </a>
+      </div>
+    </section>
+
+    <!-- Ringkasan Statistik Cards -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon primary">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div>
+          <div class="stat-label">Total Topik Resmi</div>
+          <div class="stat-value" id="totalTopics">10 Topik</div>
+          <div class="stat-note">Terverifikasi tim statistik makro 2025</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon success">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        </div>
+        <div>
+          <div class="stat-label">Status Chatbot</div>
+          <div class="stat-value" style="color: var(--success);">Aktif Melayani</div>
+          <div class="stat-note">Terhubung Groq AI Cloud & Baileys</div>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-icon accent">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        </div>
+        <div>
+          <div class="stat-label">Pusat Layanan BPS</div>
+          <div class="stat-value">PST Bangka</div>
+          <div class="stat-note">Sungailiat • bangkakab.bps.go.id</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Table Card -->
+    <section class="table-card">
+      <div class="table-header">
+        <div class="table-header-title">
+          <h2>Daftar Topik & Data Statistik</h2>
+          <p id="tableSubtitle">Memuat data...</p>
+        </div>
+        <div class="search-box">
+          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" id="searchInput" class="search-input" placeholder="Cari topik (misal: Kemiskinan, IPG)..." oninput="filterTable()">
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th style="width: 60px; text-align: center;">No</th>
+              <th style="width: 240px;">Nama Topik / Menu</th>
+              <th>Isi Jawaban & Data Statistik WhatsApp</th>
+              <th style="width: 140px; text-align: right;">Aksi</th>
+            </tr>
+          </thead>
+          <tbody id="faqTableBody">
+            <tr>
+              <td colspan="4" style="text-align: center; padding: 40px; color: var(--muted-foreground);">
+                Memuat data statistik dari basis data...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <p style="font-weight: 700; color: var(--foreground);">Badan Pusat Statistik Kabupaten Bangka</p>
+      <p style="margin-top: 4px;">Jl. Jenderal Ahmad Yani, Jalur Dua Sungailiat • Layanan Chatbot SAPA BPS 2025 • <a href="https://bangkakab.bps.go.id" target="_blank">bangkakab.bps.go.id</a></p>
+    </footer>
+  </main>
+
+  <!-- Edit/Add Modal -->
+  <div class="modal-backdrop" id="faqModal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3 id="modalTitle">Ubah Data Statistik</h3>
+        <button class="btn-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div>
+          <input type="hidden" id="editOldTopic">
+          <div class="form-group">
+            <label>Nama Topik / Pertanyaan Menu</label>
+            <input type="text" id="editTopic" class="form-input" placeholder="Misal: Kemiskinan 2025">
+          </div>
+          <div class="form-group">
+            <label>Isi Jawaban Resmi BPS (Format WhatsApp)</label>
+            <textarea id="editAnswer" class="form-textarea" placeholder="Tuliskan jawaban statistik resmi..." oninput="updateLivePreview()"></textarea>
+          </div>
+        </div>
+
+        <div class="preview-panel">
+          <div class="preview-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12h20"/><path d="M20 12v6a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-6"/></svg>
+            Live Preview WhatsApp
+          </div>
+          <div class="wa-bubble" id="previewBubble">
+            Ketik jawaban di samping untuk melihat hasil tayang...
+          </div>
+          <div class="wa-time">
+  <span>08:00 WIB</span>
+  <svg width="16" height="11" viewBox="0 0 16 11" fill="none" style="display: inline-block;">
+    <path d="M11.05 0.5L4.5 7.05L1.95 4.5L0.5 5.95L4.5 9.95L12.5 1.95L11.05 0.5Z" fill="#53bdeb"/>
+    <path d="M14.5 1.95L6.5 9.95L5.85 9.3L7.3 7.85L13.05 2.1L14.5 1.95Z" fill="#53bdeb"/>
+  </svg>
+</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" onclick="closeModal()">Batal</button>
+        <button class="btn btn-primary" onclick="saveData()">Simpan Data</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let rawFaqs = [];
+
+    // Helper formatting WhatsApp Markdown (Bersih dari tag <br>, simbol bintang *, underscore _, tilde ~)
+    function formatMarkdown(text) {
+      if (!text) return '';
+      
+      // 1. Bersihkan semua variasi tag <br> atau baris baru escape (\n) menjadi newline murni
+      var clean = text
+        .replace(/<br\s*[\/]?>/gi, '\n')
+        .replace(/\\n/g, '\n');
+
+      // 2. Escape karakter HTML spesial
+      var safe = clean
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+
+      // 3. Format Bold WhatsApp: *teks* -> <strong>teks</strong>
+      var partsBold = safe.split('*');
+      if (partsBold.length > 2) {
+        safe = partsBold.reduce(function(acc, part, idx) {
+          return acc + (idx % 2 === 1 ? '<strong>' + part + '</strong>' : part);
+        }, '');
+      }
+
+      // 4. Format Italic WhatsApp: _teks_ -> <em>teks</em>
+      var partsItalic = safe.split('_');
+      if (partsItalic.length > 2) {
+        safe = partsItalic.reduce(function(acc, part, idx) {
+          return acc + (idx % 2 === 1 ? '<em>' + part + '</em>' : part);
+        }, '');
+      }
+
+      // 5. Format Strikethrough WhatsApp: ~teks~ -> <del>teks</del>
+      var partsStrike = safe.split('~');
+      if (partsStrike.length > 2) {
+        safe = partsStrike.reduce(function(acc, part, idx) {
+          return acc + (idx % 2 === 1 ? '<del>' + part + '</del>' : part);
+        }, '');
+      }
+
+      // 6. Konversi newline murni (\n) menjadi tag visual <br> di browser
+      safe = safe.replace(/\n/g, '<br>');
+
+      return safe;
+    }
+
+    function determineCategory(topic) {
+      const t = topic.toLowerCase();
+      if (t.includes('penduduk') || t.includes('populasi')) return 'Kependudukan';
+      if (t.includes('miskin') || t.includes('kemiskinan')) return 'Sosial Ekonomi';
+      if (t.includes('ipm') || t.includes('manusia')) return 'Indeks IPM';
+      if (t.includes('ipg') || t.includes('gender')) return 'Gender IPG';
+      if (t.includes('pendidikan') || t.includes('sekolah') || t.includes('hls') || t.includes('rls')) return 'Pendidikan';
+      if (t.includes('kerja') || t.includes('tpt') || t.includes('pengangguran')) return 'Ketenagakerjaan';
+      if (t.includes('ekonomi') || t.includes('pdrb') || t.includes('padi')) return 'Perekonomian';
+      if (t.includes('infla') || t.includes('ihk')) return 'Harga Konsumen';
+      if (t.includes('layanan') || t.includes('pst') || t.includes('kontak')) return 'Layanan PST';
+      return 'Statistik Makro';
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch('/api/faqs');
+        rawFaqs = await res.json();
+        renderTable(rawFaqs);
+        document.getElementById('totalTopics').innerText = rawFaqs.length + ' Topik';
+      } catch (err) {
+        console.error(err);
+        document.getElementById('faqTableBody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: red; padding: 20px;">Gagal memuat data dari server.</td></tr>';
+      }
+    }
+
+    function renderTable(dataList) {
+      const tbody = document.getElementById('faqTableBody');
+      const subtitle = document.getElementById('tableSubtitle');
+      subtitle.innerText = dataList.length + ' topik ditampilkan dari ' + rawFaqs.length + ' topik tersimpan.';
+
+      if (dataList.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 40px; color: var(--muted-foreground);">Topik tidak ditemukan. Coba kata kunci lain.</td></tr>';
+        return;
+      }
+
+      tbody.innerHTML = dataList.map(function(item, idx) {
+        const cat = determineCategory(item.pertanyaan);
+        const num = String(idx + 1).padStart(2, '0');
+        const formattedAns = formatMarkdown(item.jawaban);
+
+        return '<tr>' +
+          '<td class="td-num">' + num + '</td>' +
+          '<td>' +
+            '<div class="topic-title">' + item.pertanyaan + '</div>' +
+            '<div class="badge-group">' +
+              '<span class="badge badge-cat">' + cat + '</span>' +
+              '<span class="badge badge-available">' +
+                '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
+                'Data tersedia' +
+              '</span>' +
+            '</div>' +
+          '</td>' +
+          '<td>' +
+            '<div class="faq-content">' + formattedAns + '</div>' +
+            '<div class="meta-row">' +
+              '<span><strong>Sumber:</strong> BPS Kab. Bangka 2025</span>' +
+              '<span>• Diperbarui Real-Time</span>' +
+            '</div>' +
+          '</td>' +
+          '<td class="actions-cell">' +
+            '<button class="btn btn-outline" style="padding: 6px 12px; font-size: 12px;" onclick="openEditModal(' + idx + ')">' +
+              '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>' +
+              'Ubah' +
+            '</button> ' +
+            '<button class="btn-danger-ghost" title="Hapus Topik" onclick="deleteData(\'' + encodeURIComponent(item.pertanyaan) + '\')">' +
+              '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+            '</button>' +
+          '</td>' +
+        '</tr>';
+      }).join('');
+    }
+
+    function filterTable() {
+      const q = document.getElementById('searchInput').value.toLowerCase().trim();
+      if (!q) {
+        renderTable(rawFaqs);
+        return;
+      }
+      const filtered = rawFaqs.filter(function(item) {
+        return item.pertanyaan.toLowerCase().indexOf(q) !== -1 || 
+               item.jawaban.toLowerCase().indexOf(q) !== -1;
+      });
+      renderTable(filtered);
+    }
+
+    function openAddModal() {
+      document.getElementById('modalTitle').innerText = 'Tambah Data Statistik Baru';
+      document.getElementById('editOldTopic').value = '';
+      document.getElementById('editTopic').value = '';
+      document.getElementById('editAnswer').value = '';
+      updateLivePreview();
+      document.getElementById('faqModal').classList.add('active');
+    }
+
+    function openEditModal(idx) {
+      const item = rawFaqs[idx];
+      if (!item) return;
+      document.getElementById('modalTitle').innerText = 'Ubah Data: ' + item.pertanyaan;
+      document.getElementById('editOldTopic').value = item.pertanyaan;
+      document.getElementById('editTopic').value = item.pertanyaan;
+      // Konversi teks <br> menjadi baris baru (Enter) alami di dalam textarea
+      document.getElementById('editAnswer').value = (item.jawaban || '')
+        .replace(/<br\s*[\/]?>/gi, '\n')
+        .replace(/\\n/g, '\n');
+      updateLivePreview();
+      document.getElementById('faqModal').classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('faqModal').classList.remove('active');
+    }
+
+    function updateLivePreview() {
+      const ans = document.getElementById('editAnswer').value;
+      const preview = document.getElementById('previewBubble');
+      if (!ans.trim()) {
+        preview.innerText = 'Ketik jawaban di samping untuk melihat hasil tayang WhatsApp...';
+      } else {
+        preview.innerHTML = formatMarkdown(ans);
+      }
+    }
+
+    async function saveData() {
+      const topic = document.getElementById('editTopic').value.trim();
+      const answer = document.getElementById('editAnswer').value.trim();
+      const oldTopic = document.getElementById('editOldTopic').value;
+
+      if (!topic || !answer) {
+        alert('Mohon lengkapi nama topik dan jawaban statistik!');
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/faqs/save', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            pertanyaan: topic,
+            jawaban: answer,
+            old_pertanyaan: oldTopic
+          })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          closeModal();
+          await loadData();
+        } else {
+          alert('Gagal: ' + result.message);
+        }
+      } catch (e) {
+        alert('Terjadi kesalahan saat menyimpan data.');
+      }
+    }
+
+    async function deleteData(encodedTopic) {
+      const topic = decodeURIComponent(encodedTopic);
+      if (!confirm('Apakah Anda yakin ingin menghapus topik "' + topic + '"?')) return;
+
+      try {
+        const res = await fetch('/api/faqs/delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ pertanyaan: topic })
+        });
+        const result = await res.json();
+        if (result.status === 'success') {
+          await loadData();
+        } else {
+          alert('Gagal: ' + result.message);
+        }
+      } catch (e) {
+        alert('Terjadi kesalahan saat menghapus data.');
+      }
+    }
+
+    // Initial load
+    loadData();
+  </script>
+</body>
+</html>
+

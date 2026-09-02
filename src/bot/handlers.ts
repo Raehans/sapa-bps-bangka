@@ -3,9 +3,9 @@ import fs from 'fs';
 import { CSV_FILE_PATH, INFLASI_REDIRECT_CARD } from '../data/csvLoader.js';
 import { processUserMessage } from '../nlp/matcher.js';
 
-export async function handleIncomingMessages(sock: WASocket, messages: proto.IWebMessageInfo[]) {
+export async function handleIncomingMessages(sock: WASocket, messages: any[]) {
   for (const msg of messages) {
-    if (msg.key.fromMe) continue;
+    if (!msg.key || msg.key.fromMe) continue;
     if (msg.key.remoteJid === 'status@broadcast') continue;
     const jid = msg.key.remoteJid;
     if (!jid) continue;
@@ -78,4 +78,5 @@ export async function handleIncomingMessages(sock: WASocket, messages: proto.IWe
     }
   }
 }
+
 
