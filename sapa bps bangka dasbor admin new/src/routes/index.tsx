@@ -167,13 +167,6 @@ function AdminPanel() {
               <Button size="lg" variant="secondary" className="font-semibold">
                 <Plus className="size-4" /> Tambah Data Baru
               </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary-foreground/35 bg-transparent font-semibold text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
-              >
-                <Download className="size-4" /> Unduh Cadangan CSV
-              </Button>
             </div>
           </div>
         </section>
